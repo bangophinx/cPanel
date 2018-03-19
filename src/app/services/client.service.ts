@@ -29,4 +29,20 @@ export class ClientService {
     return this.clients;
   }
 
+  newClient(client: IClient) {
+    this.clientsCollection.add(client);
+  }
+
+  initClient(){
+    const client : IClient = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      balance: 0
+    }
+
+    return client;
+  }
+
 }
