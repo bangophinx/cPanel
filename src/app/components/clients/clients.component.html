@@ -22,12 +22,13 @@
   </thead>
   <tbody>
     <tr *ngFor="let client of clients">
-      <td>{{client.firstName}} {{client.lastname}}</td>
+      <td>{{client.firstName}} {{client.lastName}}</td>
       <td>{{client.email}}</td>
       <td>{{client.balance | currency: "EUR"}}</td>
       <td>
         <a class="btn btn-secondary btn-sm" routerLink="client/{{client.id}}">
-          <i class="fa fa-info-circle"> Details </i>
+          <i class="fa fa-info-circle"></i>
+          Details
         </a>
       </td>
     </tr>

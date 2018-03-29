@@ -4,6 +4,7 @@ import { ClientService } from '../../services/client.service';
 import { IClient } from '../../models/iclient';
 import { createViewChild } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-add-client',
@@ -13,23 +14,25 @@ import { Router } from '@angular/router';
 export class AddClientComponent implements OnInit {
   
   client: IClient;
-  diableBalanceOnAdd: boolean = true;
+  disableBalanceOnAdd: boolean;
   @ViewChild('clientForm') form: any;
 
   constructor(
     private clientService: ClientService,
     private flashMessagesService: FlashMessagesService,
-    private router: Router
+    private router: Router,
+    private settingsService: SettingsService
   ) { }
 
   ngOnInit() {
     this.client = this.clientService.initClient();
+    this.disableBalanceOnAdd = this.settingsService.getSetting().disableBalanceOnAdd;
 
   }
 
   onSubmit({value, valid}: {value: IClient, valid:boolean}){
 
-    if(this.diableBalanceOnAdd){
+    if(this.disableBalanceOnAdd){
       value.balance = 0;
     }
     
@@ -40,10 +43,6 @@ export class AddClientComponent implements OnInit {
       this.router.navigate(['/']);
       this.flashMessagesService.show('Client Form Submitted', { cssClass: 'alert-success', timeout: 3000 });
     }
-
-    console.log(value, valid);
-
-
   }
 
 }

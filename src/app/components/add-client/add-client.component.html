@@ -18,7 +18,7 @@
         placeholder="Enter First Name" 
         #clientFirstName="ngModel" 
         [ngClass]="{'is-invalid': clientFirstName.errors && clientFirstName.touched}"
-        [(ngModel)]="firstName" 
+        [(ngModel)]="client.firstName" 
         required minlength="2">
         <div [hidden]="!clientFirstName.errors?.required" class="invalid-feedback">
           First Name errors
@@ -37,7 +37,7 @@
         placeholder="Enter Last Name" 
         #clientLastName="ngModel" 
         [ngClass]="{'is-invalid': clientLastName.errors && clientLastName.touched}"
-        [(ngModel)]="lastName" required minlength="2">
+        [(ngModel)]="client.lastName" required minlength="2">
         
         <div [hidden]="!clientLastName.errors?.required" class="invalid-feedback">
           Last Name errors
@@ -56,7 +56,7 @@
         placeholder="Enter Email" 
         #clientEmail="ngModel" 
         [ngClass]="{'is-invalid': clientEmail.errors && clientEmail.touched}"
-        [(ngModel)]="email" required 
+        [(ngModel)]="client.email" required 
         pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
         >
         <div [hidden]="!clientEmail.errors?.required" class="invalid-feedback">
@@ -75,7 +75,7 @@
           placeholder="Enter Phone Number" 
           #clientPhoneNumber="ngModel" 
           [ngClass]="{'is-invalid': clientPhoneNumber.errors && clientPhoneNumber.touched}"
-          [(ngModel)]="phoneNumber" required minlength="5">
+          [(ngModel)]="client.phoneNumber" required minlength="5">
           
           <div [hidden]="!clientPhoneNumber.errors?.required" class="invalid-feedback">
             Phone Number Required
@@ -93,8 +93,8 @@
           class="form-control" 
           placeholder="Enter Balance" 
           #clientBalance="ngModel"
-          [disabled]="diableBalanceOnAdd"
-          [(ngModel)]="balance" required minlength="5">
+          [disabled]="disableBalanceOnAdd"
+          [(ngModel)]="client.balance" required>
         </div>
 
         <input 

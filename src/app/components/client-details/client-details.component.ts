@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from '../../services/client.service';
 import { IClient } from '../../models/iclient';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-client-details',
@@ -8,11 +10,44 @@ import { IClient } from '../../models/iclient';
   styleUrls: ['./client-details.component.css']
 })
 export class ClientDetailsComponent implements OnInit {
+  id: string;
   client: IClient;
+  hasBalance: boolean = false;
+  showBalanceUpdateInput: boolean = false;
 
-  constructor(private clientService: ClientService) { }
+  constructor(
+    private clientService: ClientService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private flashMessagesService: FlashMessagesService,
+  ) { }
 
   ngOnInit() {
+    this.id = this.route.snapshot.params['id'];
+    this.clientService.getClient(this.id).subscribe(
+      client => {
+        if (client != null) {
+          if (client.balance > 0) {
+            this.hasBalance = true;
+          }
+        }
+        this.client = client;
+      }
+    );
+  }
+
+  updateBalance() {
+    this.clientService.updateClient(this.client);
+    this.showBalanceUpdateInput = false;
+    this.flashMessagesService.show('Balance Updated', { cssClass: 'alert-success', timeout: 3000 });
+  }
+
+  onDeleteClick() {
+    if (confirm('Are you sure you want to delete?')) {
+      this.clientService.deleteClient(this.client);
+      this.flashMessagesService.show('Client Removed', { cssClass: 'alert-success', timeout: 3000 });
+      this.router.navigate(['/']);
+    }
   }
 
 }
